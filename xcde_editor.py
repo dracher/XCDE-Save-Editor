@@ -117,11 +117,18 @@ class XCDESaveEditor:
     # Money (Gold) offset
     MONEY_OFFSET = 0x151B40
 
-    def __init__(self, save_path):
-        """Initialize the editor with the path to the save file"""
+    def __init__(self, save_path, dry_run=False):
+        """Initialize the editor with the path to the save file.
+
+        Args:
+            save_path: Path to the XCDE save file.
+            dry_run: If True, never write anything to disk (no backup,
+                no output). Only in-memory changes are made.
+        """
         self.save_path = save_path
         self.backup_path = save_path + ".backup"
         self._backup_created = False
+        self._dry_run = dry_run
 
         # Validate and read the save file
         self._validate_save_file(save_path)
@@ -163,6 +170,8 @@ class XCDESaveEditor:
 
     def _ensure_backup(self):
         """Create a backup of the original save file before first modification"""
+        if self._dry_run:
+            return
         if not self._backup_created and not os.path.exists(self.backup_path):
             # Atomic write: write to temp file, then rename
             tmp_path = self.backup_path + ".tmp"
@@ -592,7 +601,7 @@ def main():
 
     # Validate and open the save file
     try:
-        editor = XCDESaveEditor(save_file)
+        editor = XCDESaveEditor(save_file, dry_run=dry_run)
     except (FileNotFoundError, ValueError) as e:
         print(f"Error: {e}")
         sys.exit(1)

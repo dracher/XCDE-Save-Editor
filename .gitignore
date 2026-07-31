@@ -1,2 +1,6 @@
 .reasonix
 reasonix.toml
+
+# Save file artifacts created by the editor
+*.sav.backup
+*.sav.modified
