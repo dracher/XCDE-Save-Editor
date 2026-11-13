@@ -14,7 +14,7 @@ import unittest
 import xcde_editor as e
 
 # Offsets copied from the editor; used only to fabricate a fake save file.
-PARTY_MEMBERS_OFFSET = 0x152368
+PARTY_MEMBERS_OFFSET = 0x152728
 MONEY_OFFSET = 0x151B40
 
 
@@ -99,6 +99,7 @@ class WriteTests(unittest.TestCase):
             out = os.path.join(tmp, "out.sav")
             editor = e.XCDESaveEditor(path)
             editor.set_character_level(1, 50)
+            editor.set_character_ap(1, 338)
             editor.set_money(5000)
             editor.save(out)
             self.assertTrue(os.path.exists(out))
@@ -106,6 +107,10 @@ class WriteTests(unittest.TestCase):
                 data = f.read()
             self.assertEqual(
                 struct.unpack_from("<I", data, PARTY_MEMBERS_OFFSET)[0], 50
+            )
+            self.assertEqual(
+                struct.unpack_from("<I", data, PARTY_MEMBERS_OFFSET + 0x08)[0],
+                338,
             )
             self.assertEqual(struct.unpack_from("<I", data, MONEY_OFFSET)[0], 5000)
             # Original save must be untouched

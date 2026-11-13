@@ -17,7 +17,7 @@ from enum import IntEnum
 # ── Constants ──────────────────────────────────────────────────────────────────
 
 # Minimum valid save file size (bytes): must cover the arts data block
-MIN_SAVE_FILE_SIZE = 0x153860  # ARTS_LEVELS_OFFSET + TOTAL_ARTS * ARTS_LEVEL_SIZE
+MIN_SAVE_FILE_SIZE = 0x153C20  # ARTS_LEVELS_OFFSET + TOTAL_ARTS * ARTS_LEVEL_SIZE
 MAX_MONEY_VALUE = 0xFFFFFFFF
 MAX_LEVEL = 99
 MAX_ART_LEVEL = 12
@@ -103,14 +103,14 @@ LEGACY_COMMAND_MAP = {
 
 class XCDESaveEditor:
     # Important offsets in the save file
-    PARTY_MEMBERS_OFFSET = 0x152368
+    PARTY_MEMBERS_OFFSET = 0x152728
     PARTY_MEMBER_SIZE = 0x138
     EXP_OFFSET_IN_MEMBER = 0x04
     LEVEL_OFFSET_IN_MEMBER = 0x00
     AP_OFFSET_IN_MEMBER = 0x08
 
     # Arts levels offset and size
-    ARTS_LEVELS_OFFSET = 0x1536E8
+    ARTS_LEVELS_OFFSET = 0x153AA8
     ARTS_LEVEL_SIZE = 2
     TOTAL_ARTS = 188
 
